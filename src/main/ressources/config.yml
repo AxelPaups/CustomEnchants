@@ -1,0 +1,53 @@
+# ============================================
+#  CustomEnchants - Configuration
+# ============================================
+
+# --- Enclume : anti-cumul ---
+enclume:
+  # Nombre maximum d'enchantements custom sur un même item
+  max-enchants-custom: 3
+  # Multiplicateur de coût XP par enchantement custom déjà présent
+  # (coût = base rareté x multiplicateur^(nb déjà présents))
+  multiplicateur-cout: 2.0
+
+# --- Livres dans les coffres générés (donjons, mineshafts, etc.) ---
+loot:
+  active: true
+  # Chance (0.0 - 1.0) qu'un coffre généré contienne un livre custom
+  chance: 0.12
+
+# --- Paramètres des effets ---
+effets:
+  vampirisme:
+    pv-par-niveau: 1.0        # PV volés par coup et par niveau (2 PV = 1 coeur)
+    cooldown-secondes: 2
+  foudroiement:
+    chance-par-niveau: 0.10
+  vague:
+    degats-ratio-par-niveau: 0.30
+    rayon: 3.0
+  faucheuse:
+    chance: 0.05
+    multiplicateur: 3.0
+  execution:
+    seuil-pv: 0.20
+    bonus-par-niveau: 0.25
+  rage:
+    seuil-pv: 0.30
+    bonus-par-niveau: 0.20
+  chasseur:
+    bonus-par-niveau: 0.15
+  decapiteur:
+    chance-par-niveau: 0.05
+  prospecteur:
+    chance-par-niveau: 0.10
+  experience_plus:
+    bonus-par-niveau: 0.25
+  dernier_souffle:
+    cooldown-secondes: 300
+  moissonneur:
+    replanter: true
+
+# --- Messages ---
+messages:
+  prefixe: "<gradient:#9b59ff:#ff5599><bold>CE</bold></gradient> <dark_gray>»</dark_gray> "
