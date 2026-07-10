@@ -1,2 +1,0 @@
-# CustomEnchants
-CustomEnchants mc
