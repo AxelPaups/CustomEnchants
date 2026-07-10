@@ -13,7 +13,7 @@ import static com.neosoma.customenchants.enchant.Categorie.*;
 import static com.neosoma.customenchants.enchant.Cible.*;
 import static com.neosoma.customenchants.enchant.Rarity.*;
 
-/** Catalogue central des 40 enchantements custom. */
+/** Catalogue central des 40 enchantements custom du plugin. */
 public final class Enchants {
 
     private Enchants() {}
@@ -167,4 +167,9 @@ public final class Enchants {
 
     /** Index id -> définition. */
     public static final Map<String, CEnchant> PAR_ID =
-            ALL.stream
+            ALL.stream().collect(Collectors.toUnmodifiableMap(CEnchant::id, e -> e));
+
+    public static CEnchant parId(String id) {
+        return PAR_ID.get(id);
+    }
+}

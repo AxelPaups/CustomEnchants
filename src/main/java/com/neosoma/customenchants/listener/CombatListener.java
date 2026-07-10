@@ -24,7 +24,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-/** Effets des enchantements de combat (épées) + épines vengeresses. */
+/** Effets des enchantements de combat sur épées, plus épines vengeresses. */
 public class CombatListener implements Listener {
 
     private final CustomEnchantsPlugin plugin;
@@ -200,4 +200,3 @@ public class CombatListener implements Listener {
         }
     }
 }
-                                
