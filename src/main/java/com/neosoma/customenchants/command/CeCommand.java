@@ -81,7 +81,7 @@ public class CeCommand implements BasicCommand {
             case "give" -> {
                 if (!admin(sender)) return;
                 if (args.length < 4) {
-                    plugin.msg(sender, "<red>Usage : /ce give <joueur> <enchant> <niveau> [livre|item]</red>");
+                    plugin.msg(sender, "<red>Usage : /ce give (joueur) (enchant) (niveau) [livre|item]</red>");
                     return;
                 }
                 Player cible = Bukkit.getPlayerExact(args[1]);
@@ -113,7 +113,7 @@ public class CeCommand implements BasicCommand {
                     return;
                 }
                 if (args.length < 3) {
-                    plugin.msg(sender, "<red>Usage : /ce apply <enchant> <niveau></red>");
+                    plugin.msg(sender, "<red>Usage : /ce apply (enchant) (niveau)</red>");
                     return;
                 }
                 CEnchant ce = trouver(sender, args, 1);
@@ -124,6 +124,11 @@ public class CeCommand implements BasicCommand {
                 ItemStack enMain = joueur.getInventory().getItemInMainHand();
                 if (enMain.getType().isAir()) {
                     plugin.msg(sender, "<red>Prenez un item en main.</red>");
+                    return;
+                }
+                if (!EnchantIndex.get(ce.id()).canEnchantItem(enMain)) {
+                    plugin.msg(sender, "<red>" + ce.nom() + " ne s'applique pas sur cet item."
+                            + " Items valides : " + ce.cible().label() + ".</red>");
                     return;
                 }
                 enMain.addUnsafeEnchantment(EnchantIndex.get(ce.id()), niveau);
@@ -176,10 +181,10 @@ public class CeCommand implements BasicCommand {
     private void aide(CommandSender sender) {
         plugin.msg(sender, "<bold>Commandes CustomEnchants :</bold>");
         plugin.msg(sender, "<yellow>/ce panel</yellow> <gray>— panel admin</gray>");
-        plugin.msg(sender, "<yellow>/ce toggle <enchant></yellow> <gray>— activer/désactiver</gray>");
-        plugin.msg(sender, "<yellow>/ce give <joueur> <enchant> <niveau> [livre|item]</yellow>");
-        plugin.msg(sender, "<yellow>/ce apply <enchant> <niveau></yellow> <gray>— enchante l'item en main</gray>");
-        plugin.msg(sender, "<yellow>/ce info <enchant></yellow> <gray>— détails</gray>");
+        plugin.msg(sender, "<yellow>/ce toggle (enchant)</yellow> <gray>— activer/désactiver</gray>");
+        plugin.msg(sender, "<yellow>/ce give (joueur) (enchant) (niveau) [livre|item]</yellow>");
+        plugin.msg(sender, "<yellow>/ce apply (enchant) (niveau)</yellow> <gray>— enchante l'item en main</gray>");
+        plugin.msg(sender, "<yellow>/ce info (enchant)</yellow> <gray>— détails</gray>");
         plugin.msg(sender, "<yellow>/ce list [rarete]</yellow> <gray>— liste</gray>");
         plugin.msg(sender, "<yellow>/ce reload</yellow> <gray>— recharge la config</gray>");
     }
