@@ -16,6 +16,12 @@ loot:
   # Chance (0.0 - 1.0) qu'un coffre généré contienne un livre custom
   chance: 0.12
 
+# --- Villageois bibliothécaires ---
+villageois:
+  actif: true
+  # Chance (0.0 - 1.0) qu'un trade de livre enchanté vanilla soit remplacé par un livre custom
+  chance-remplacement: 0.20
+
 # --- Paramètres des effets ---
 effets:
   vampirisme:

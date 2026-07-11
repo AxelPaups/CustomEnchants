@@ -37,8 +37,9 @@ public final class AdminPanel {
         if (holder.page >= pagesMax) holder.page = pagesMax - 1;
         if (holder.page < 0) holder.page = 0;
 
+        String titrePanel = holder.admin ? "Panel CustomEnchants" : "Enchantements CustomEnchants";
         Inventory inv = Bukkit.createInventory(holder, TAILLE,
-                titre("Panel CustomEnchants — page " + (holder.page + 1) + "/" + pagesMax));
+                titre(titrePanel + " — page " + (holder.page + 1) + "/" + pagesMax));
         holder.setInventory(inv);
         holder.idsAffiches.clear();
 
@@ -46,10 +47,10 @@ public final class AdminPanel {
         for (int i = 0; i < PAR_PAGE && debut + i < filtres.size(); i++) {
             CEnchant ce = filtres.get(debut + i);
             holder.idsAffiches.add(ce.id());
-            inv.setItem(i, itemEnchant(ce));
+            inv.setItem(i, itemEnchant(ce, holder.admin));
         }
 
-        // Barre de navigation
+        // Barre de navigation (commune aux deux panels)
         if (holder.page > 0) {
             inv.setItem(45, bouton(Material.ARROW, "Page précédente", NamedTextColor.YELLOW));
         }
@@ -64,9 +65,13 @@ public final class AdminPanel {
         inv.setItem(49, bouton(Material.NETHER_STAR,
                 EnchantState.nbActifs() + "/" + Enchants.ALL.size() + " enchantements actifs",
                 NamedTextColor.WHITE));
-        inv.setItem(50, bouton(Material.LIME_DYE, "Tout activer", NamedTextColor.GREEN));
-        inv.setItem(51, bouton(Material.GRAY_DYE, "Tout désactiver", NamedTextColor.RED));
-        inv.setItem(52, bouton(Material.COMPARATOR, "Recharger la config", NamedTextColor.GOLD));
+
+        // Boutons globaux : réservés au panel admin
+        if (holder.admin) {
+            inv.setItem(50, bouton(Material.LIME_DYE, "Tout activer", NamedTextColor.GREEN));
+            inv.setItem(51, bouton(Material.GRAY_DYE, "Tout désactiver", NamedTextColor.RED));
+            inv.setItem(52, bouton(Material.COMPARATOR, "Recharger la config", NamedTextColor.GOLD));
+        }
         if (debut + PAR_PAGE < filtres.size()) {
             inv.setItem(53, bouton(Material.ARROW, "Page suivante", NamedTextColor.YELLOW));
         }
@@ -74,7 +79,7 @@ public final class AdminPanel {
         joueur.openInventory(inv);
     }
 
-    private static ItemStack itemEnchant(CEnchant ce) {
+    private static ItemStack itemEnchant(CEnchant ce, boolean admin) {
         boolean actif = EnchantState.actif(ce.id());
         ItemStack item = new ItemStack(actif ? Material.ENCHANTED_BOOK : Material.BOOK);
 
@@ -93,11 +98,13 @@ public final class AdminPanel {
             if (ce.groupeExclusif() != null) {
                 lore.add(Util.ligneGrise("Non cumulable avec son groupe."));
             }
-            lore.add(Component.empty());
-            lore.add(Component.text("Clic gauche : activer / désactiver", NamedTextColor.YELLOW)
-                    .decoration(TextDecoration.ITALIC, false));
-            lore.add(Component.text("Clic droit : se donner (livre ou item)", NamedTextColor.YELLOW)
-                    .decoration(TextDecoration.ITALIC, false));
+            if (admin) {
+                lore.add(Component.empty());
+                lore.add(Component.text("Clic gauche : activer / désactiver", NamedTextColor.YELLOW)
+                        .decoration(TextDecoration.ITALIC, false));
+                lore.add(Component.text("Clic droit : se donner (livre ou item)", NamedTextColor.YELLOW)
+                        .decoration(TextDecoration.ITALIC, false));
+            }
             meta.lore(lore);
         });
         return item;
@@ -114,7 +121,7 @@ public final class AdminPanel {
         Inventory inv = Bukkit.createInventory(holder, 27, titre("Se donner : " + ce.nom()));
         holder.setInventory(inv);
 
-        inv.setItem(4, itemEnchant(ce));
+        inv.setItem(4, itemEnchant(ce, true));
         inv.setItem(10, bouton(Material.REDSTONE, "Niveau −1", NamedTextColor.RED));
         inv.setItem(13, bouton(Material.EXPERIENCE_BOTTLE,
                 "Niveau choisi : " + Util.romain(holder.niveau) + " (max "

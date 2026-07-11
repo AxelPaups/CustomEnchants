@@ -13,6 +13,7 @@ import com.neosoma.customenchants.listener.LootListener;
 import com.neosoma.customenchants.listener.MiscListener;
 import com.neosoma.customenchants.listener.TableFilterListener;
 import com.neosoma.customenchants.listener.ToolListener;
+import com.neosoma.customenchants.listener.VillagerListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
@@ -44,6 +45,7 @@ public final class CustomEnchantsPlugin extends JavaPlugin {
         pm.registerEvents(new TableFilterListener(), this);
         pm.registerEvents(new AnvilListener(this), this);
         pm.registerEvents(new LootListener(this), this);
+        pm.registerEvents(new VillagerListener(this), this);
         pm.registerEvents(new GuiListener(this), this);
 
         // Effets d'armure périodiques (toutes les 3 secondes, léger)

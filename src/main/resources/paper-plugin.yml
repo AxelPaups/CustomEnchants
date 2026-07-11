@@ -1,7 +1,15 @@
 name: CustomEnchants
-version: '1.0.0'
+version: '1.1.0'
 main: com.neosoma.customenchants.CustomEnchantsPlugin
 bootstrapper: com.neosoma.customenchants.CEBootstrap
 api-version: '1.21'
 description: 40 enchantements custom avec raretés, intégrés à la table d'enchantement et à l'enclume, avec panel admin.
 authors: [Axel]
+
+permissions:
+  customenchants.use:
+    description: Utiliser /ce (menu, info, list)
+    default: true
+  customenchants.admin:
+    description: Administrer les enchantements custom (panel, toggle, give, apply, reload)
+    default: op

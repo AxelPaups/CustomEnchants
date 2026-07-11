@@ -55,6 +55,7 @@ public class GuiListener implements Listener {
 
         // Zone des enchantements
         if (slot < AdminPanel.PAR_PAGE) {
+            if (!panel.admin) return; // menu public : lecture seule, aucune action au clic
             if (slot >= panel.idsAffiches.size()) return;
             String id = panel.idsAffiches.get(slot);
             CEnchant ce = Enchants.parId(id);
@@ -71,6 +72,9 @@ public class GuiListener implements Listener {
             }
             return;
         }
+
+        // Boutons globaux : réservés au panel admin
+        if (!panel.admin && (slot == 50 || slot == 51 || slot == 52)) return;
 
         // Barre de navigation
         switch (slot) {

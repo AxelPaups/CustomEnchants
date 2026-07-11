@@ -17,6 +17,17 @@ public class PanelHolder implements InventoryHolder {
     public Rarity filtreRarete = null;
     public final List<String> idsAffiches = new ArrayList<>();
 
+    /** true = panel admin (toggle + give + boutons globaux), false = menu public en lecture seule. */
+    public final boolean admin;
+
+    public PanelHolder() {
+        this(true);
+    }
+
+    public PanelHolder(boolean admin) {
+        this.admin = admin;
+    }
+
     @Override
     public Inventory getInventory() {
         return inventory;

@@ -23,6 +23,7 @@ import java.util.Locale;
 
 /**
  * Commande /ce :
+ *   /ce menu                                 — menu public en lecture seule (GUI)
  *   /ce panel                                — panel admin (GUI)
  *   /ce toggle <enchant>                     — activer/désactiver
  *   /ce give <joueur> <enchant> <niv> [livre|item]
@@ -58,6 +59,14 @@ public class CeCommand implements BasicCommand {
         }
 
         switch (args[0].toLowerCase(Locale.ROOT)) {
+
+            case "menu" -> {
+                if (joueur == null) {
+                    plugin.msg(sender, "<red>Cette commande s'utilise en jeu.</red>");
+                    return;
+                }
+                AdminPanel.ouvrir(joueur, new PanelHolder(false));
+            }
 
             case "panel" -> {
                 if (!admin(sender)) return;
@@ -180,6 +189,7 @@ public class CeCommand implements BasicCommand {
 
     private void aide(CommandSender sender) {
         plugin.msg(sender, "<bold>Commandes CustomEnchants :</bold>");
+        plugin.msg(sender, "<yellow>/ce menu</yellow> <gray>— menu public (lecture seule)</gray>");
         plugin.msg(sender, "<yellow>/ce panel</yellow> <gray>— panel admin</gray>");
         plugin.msg(sender, "<yellow>/ce toggle (enchant)</yellow> <gray>— activer/désactiver</gray>");
         plugin.msg(sender, "<yellow>/ce give (joueur) (enchant) (niveau) [livre|item]</yellow>");
@@ -227,7 +237,7 @@ public class CeCommand implements BasicCommand {
         List<String> suggestions = new ArrayList<>();
 
         if (args.length <= 1) {
-            suggestions.addAll(List.of("panel", "toggle", "give", "apply", "info", "list", "reload"));
+            suggestions.addAll(List.of("menu", "panel", "toggle", "give", "apply", "info", "list", "reload"));
         } else {
             String sub = args[0].toLowerCase(Locale.ROOT);
             switch (sub) {
