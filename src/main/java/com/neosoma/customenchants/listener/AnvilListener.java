@@ -17,7 +17,8 @@ import java.util.Map;
 
 /**
  * Enclume : limite du nombre d'enchantements custom par item,
- * blocage des enchantements désactivés, et coût XP progressif anti-cumul.
+ * blocage des enchantements désactivés, compatibilité item/enchant,
+ * et coût XP progressif anti-cumul.
  */
 public class AnvilListener implements Listener {
 
@@ -34,6 +35,17 @@ public class AnvilListener implements Listener {
 
         Map<CEnchant, Integer> customs = EnchantIndex.customsSur(resultat);
         if (customs.isEmpty()) return;
+
+        // Filet de sécurité : un enchant custom ne peut pas finir sur un item incompatible
+        // (les livres enchantés peuvent contenir n'importe quoi, comme en vanilla)
+        if (resultat.getType() != org.bukkit.Material.ENCHANTED_BOOK) {
+            for (CEnchant ce : customs.keySet()) {
+                if (!EnchantIndex.get(ce.id()).canEnchantItem(resultat)) {
+                    event.setResult(null);
+                    return;
+                }
+            }
+        }
 
         ItemStack base = event.getInventory().getFirstItem();
         Map<CEnchant, Integer> surBase = EnchantIndex.customsSur(base);
