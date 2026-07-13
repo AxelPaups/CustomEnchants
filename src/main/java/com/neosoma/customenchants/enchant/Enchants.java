@@ -13,7 +13,7 @@ import static com.neosoma.customenchants.enchant.Categorie.*;
 import static com.neosoma.customenchants.enchant.Cible.*;
 import static com.neosoma.customenchants.enchant.Rarity.*;
 
-/** Catalogue central des 40 enchantements custom du plugin. */
+/** Catalogue central des enchantements custom du plugin. */
 public final class Enchants {
 
     private Enchants() {}
@@ -87,6 +87,17 @@ public final class Enchants {
         new CEnchant("pluie", "Pluie",
             "Fait pleuvoir une volée de flèches sur la zone d'impact.",
             EPIQUE, 1, Categorie.ARC, Cible.ARC, GRP_FLECHE, AUCUN, Material.BOW),
+
+        // ================= TRIDENT =================
+        new CEnchant("harpon", "Harpon",
+            "Un trident lancé qui touche une cible la tire vers vous.",
+            RARE, 2, Categorie.TRIDENT, Cible.TRIDENT, null, AUCUN, Material.TRIDENT),
+        new CEnchant("tempete", "Tempête",
+            "Chance d'invoquer la foudre sur la cible frappée, mêlée ou lancer, par tout temps.",
+            EPIQUE, 2, Categorie.TRIDENT, Cible.TRIDENT, null, AUCUN, Material.TRIDENT),
+        new CEnchant("leviathan", "Léviathan",
+            "Le coup fait déferler une vague qui repousse les ennemis proches et vous porte.",
+            MYTHIQUE, 1, Categorie.TRIDENT, Cible.TRIDENT, null, AUCUN, Material.TRIDENT),
 
         // ================= OUTILS =================
         new CEnchant("excavation", "Excavation",

@@ -4,6 +4,7 @@ package com.neosoma.customenchants.enchant;
 public enum Categorie {
     COMBAT("Combat"),
     ARC("Arc"),
+    TRIDENT("Trident"),
     OUTIL("Outil"),
     ARMURE("Armure"),
     DIVERS("Divers");

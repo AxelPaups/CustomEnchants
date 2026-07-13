@@ -9,6 +9,7 @@ public enum Cible {
     MINAGE(EquipmentSlotGroup.MAINHAND, "Outils de minage"),
     HACHE(EquipmentSlotGroup.MAINHAND, "Haches"),
     HOUE(EquipmentSlotGroup.MAINHAND, "Houes"),
+    TRIDENT(EquipmentSlotGroup.MAINHAND, "Tridents"),
     ARMURE(EquipmentSlotGroup.ARMOR, "Armure (toutes pièces)"),
     CASQUE(EquipmentSlotGroup.HEAD, "Casques"),
     PLASTRON(EquipmentSlotGroup.CHEST, "Plastrons"),

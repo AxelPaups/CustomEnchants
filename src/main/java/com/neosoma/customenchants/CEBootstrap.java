@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Bootstrapper : enregistre les 40 enchantements custom dans le registre du jeu
+ * Bootstrapper : enregistre les enchantements custom dans le registre du jeu
  * au démarrage du serveur, puis les ajoute au tag de la table d'enchantement
  * (sauf les Mythiques, obtenables uniquement via loot/admin).
  */
@@ -76,6 +76,7 @@ public class CEBootstrap implements PluginBootstrap {
                     case EPEE -> event.getOrCreateTag(ItemTypeTagKeys.ENCHANTABLE_SWORD);
                     case ARC -> RegistrySet.keySet(RegistryKey.ITEM,
                             List.of(ItemTypeKeys.BOW, ItemTypeKeys.CROSSBOW));
+                    case TRIDENT -> RegistrySet.keySet(RegistryKey.ITEM, List.of(ItemTypeKeys.TRIDENT));
                     case MINAGE -> event.getOrCreateTag(ItemTypeTagKeys.ENCHANTABLE_MINING);
                     case HACHE -> RegistrySet.keySet(RegistryKey.ITEM, List.of(
                             ItemTypeKeys.WOODEN_AXE, ItemTypeKeys.STONE_AXE, ItemTypeKeys.IRON_AXE,

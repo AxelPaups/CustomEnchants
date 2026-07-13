@@ -13,6 +13,7 @@ import com.neosoma.customenchants.listener.LootListener;
 import com.neosoma.customenchants.listener.MiscListener;
 import com.neosoma.customenchants.listener.TableFilterListener;
 import com.neosoma.customenchants.listener.ToolListener;
+import com.neosoma.customenchants.listener.TridentListener;
 import com.neosoma.customenchants.listener.VillagerListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -41,6 +42,7 @@ public final class CustomEnchantsPlugin extends JavaPlugin {
         pm.registerEvents(new CombatListener(this), this);
         pm.registerEvents(new BowListener(this), this);
         pm.registerEvents(new ToolListener(this), this);
+        pm.registerEvents(new TridentListener(this), this);
         pm.registerEvents(new MiscListener(this), this);
         pm.registerEvents(new TableFilterListener(), this);
         pm.registerEvents(new AnvilListener(this), this);

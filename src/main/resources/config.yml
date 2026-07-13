@@ -53,6 +53,10 @@ effets:
     cooldown-secondes: 300
   moissonneur:
     replanter: true
+  tempete:
+    chance-par-niveau: 0.15
+  leviathan:
+    rayon: 4.0
 
 # --- Messages ---
 messages:
