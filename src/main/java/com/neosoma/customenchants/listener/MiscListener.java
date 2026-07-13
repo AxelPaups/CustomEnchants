@@ -5,6 +5,8 @@ import com.neosoma.customenchants.enchant.EnchantIndex;
 import com.neosoma.customenchants.enchant.EnchantState;
 import com.neosoma.customenchants.util.Util;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -59,6 +61,9 @@ public class MiscListener implements Listener {
                 PotionEffectType.ABSORPTION, 200, 1, true, true));
         joueur.addPotionEffect(new PotionEffect(
                 PotionEffectType.RESISTANCE, 200, 1, true, true));
+        joueur.getWorld().playSound(joueur.getLocation(), Sound.ITEM_TOTEM_USE, 1.0f, 1.0f);
+        joueur.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING,
+                joueur.getLocation().add(0, 1, 0), 30, 0.5, 0.5, 0.5, 0.3);
         plugin.msg(joueur, "<gold>Dernier souffle</gold> <gray>s'active !</gray>");
     }
 
@@ -111,6 +116,8 @@ public class MiscListener implements Listener {
             restes.values().forEach(reste -> event.getPlayer().getWorld()
                     .dropItemNaturally(event.getPlayer().getLocation(), reste));
         }
+        event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(),
+                Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.0f, 1.0f);
         plugin.msg(event.getPlayer(),
                 "<light_purple>Âme liée+</light_purple> <gray>vous rend vos items.</gray>");
     }

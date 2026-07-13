@@ -6,6 +6,7 @@ import com.neosoma.customenchants.enchant.EnchantState;
 import com.neosoma.customenchants.util.Util;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -109,6 +110,8 @@ public class CombatListener implements Listener {
                 if (attaquant.getHealth() <= attaquant.getMaxHealth() * seuil) {
                     degats *= 1 + plugin.getConfig().getDouble(
                             "effets.rage.bonus-par-niveau", 0.20) * lvl;
+                    attaquant.getWorld().spawnParticle(Particle.ANGRY_VILLAGER,
+                            attaquant.getLocation().add(0, 2.2, 0), 3, 0.3, 0.2, 0.3, 0);
                 }
             }
 
@@ -118,6 +121,10 @@ public class CombatListener implements Listener {
                 if (victime.getHealth() <= victime.getMaxHealth() * seuil) {
                     degats *= 1 + plugin.getConfig().getDouble(
                             "effets.execution.bonus-par-niveau", 0.25) * lvl;
+                    victime.getWorld().spawnParticle(Particle.CRIT,
+                            victime.getLocation().add(0, 1, 0), 20, 0.3, 0.4, 0.3, 0.2);
+                    victime.getWorld().playSound(victime.getLocation(),
+                            Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.0f);
                 }
             }
 
@@ -163,6 +170,10 @@ public class CombatListener implements Listener {
                 agresseur.damage(0.75 * total); // dégâts sans attribution : pas de boucle
                 agresseur.addPotionEffect(new PotionEffect(
                         PotionEffectType.WEAKNESS, 40, 0, true, true));
+                agresseur.getWorld().playSound(agresseur.getLocation(),
+                        Sound.ENCHANT_THORNS_HIT, 1.0f, 1.0f);
+                agresseur.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR,
+                        agresseur.getLocation().add(0, 1, 0), 6, 0.2, 0.3, 0.2, 0.1);
             }
         }
     }
@@ -198,5 +209,10 @@ public class CombatListener implements Listener {
             Material tete = TETES.get(event.getEntityType());
             if (tete != null) event.getDrops().add(new ItemStack(tete));
         }
+
+        event.getEntity().getWorld().playSound(event.getEntity().getLocation(),
+                Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 0.8f);
+        event.getEntity().getWorld().spawnParticle(Particle.CRIT,
+                event.getEntity().getLocation().add(0, 1, 0), 15, 0.3, 0.3, 0.3, 0.1);
     }
 }

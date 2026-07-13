@@ -4,6 +4,8 @@ import com.neosoma.customenchants.CustomEnchantsPlugin;
 import com.neosoma.customenchants.enchant.EnchantIndex;
 import com.neosoma.customenchants.enchant.EnchantState;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -243,6 +245,10 @@ public class ToolListener implements Listener {
                     stack.setAmount(Math.min(stack.getMaxStackSize(), stack.getAmount() * 2));
                     drop.setItemStack(stack);
                 }
+                joueur.getWorld().playSound(joueur.getLocation(),
+                        Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.2f);
+                joueur.getWorld().spawnParticle(Particle.HAPPY_VILLAGER,
+                        joueur.getLocation().add(0, 1, 0), 8, 0.3, 0.3, 0.3, 0);
             }
         }
 

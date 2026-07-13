@@ -4,6 +4,7 @@ import com.neosoma.customenchants.CustomEnchantsPlugin;
 import com.neosoma.customenchants.enchant.EnchantIndex;
 import com.neosoma.customenchants.enchant.EnchantState;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -111,5 +112,7 @@ public class TridentListener implements Listener {
         traction.setY(Math.min(0.8, traction.getY() + 0.25));
         cible.setVelocity(traction);
         cible.setFallDistance(0);
+        cible.getWorld().playSound(cible.getLocation(),
+                Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1.0f, 0.8f);
     }
 }

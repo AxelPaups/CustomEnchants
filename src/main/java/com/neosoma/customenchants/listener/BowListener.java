@@ -5,6 +5,8 @@ import com.neosoma.customenchants.enchant.EnchantIndex;
 import com.neosoma.customenchants.enchant.EnchantState;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -118,6 +120,7 @@ public class BowListener implements Listener {
                 Vector nouveau = actuel.clone().normalize().multiply(0.75)
                         .add(versLaCible.multiply(0.25)).normalize().multiply(vitesse);
                 fleche.setVelocity(nouveau);
+                fleche.getWorld().spawnParticle(Particle.CRIT, fleche.getLocation(), 2, 0.05, 0.05, 0.05, 0);
             }
         }.runTaskTimer(plugin, 3L, 3L);
     }
@@ -160,6 +163,8 @@ public class BowListener implements Listener {
                 traction.setY(Math.min(1.2, traction.getY() + 0.35));
                 tireur.setVelocity(traction);
                 tireur.setFallDistance(0);
+                tireur.getWorld().playSound(tireur.getLocation(),
+                        Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1.0f, 1.0f);
             }
         }
 
