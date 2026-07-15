@@ -60,7 +60,8 @@ public class VillagerListener implements Listener {
             }
         }
 
-        int niveau = 1 + rand.nextInt(choisi.niveauMax());
+        int niveau = EnchantState.niveauAleatoireAutorise(choisi);
+        if (niveau <= 0) return;
         ItemStack livre = Util.livre(choisi, niveau);
 
         event.setRecipe(construireRecette(livre, choisi.rarete()));

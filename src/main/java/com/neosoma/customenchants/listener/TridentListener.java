@@ -31,7 +31,8 @@ public class TridentListener implements Listener {
     }
 
     private int niv(ItemStack trident, String id) {
-        return EnchantState.actif(id) ? EnchantIndex.niveau(trident, id) : 0;
+        int niveau = EnchantIndex.niveau(trident, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
     }
 
     /** L'item représentant le trident, en mêlée (dans la main) ou lancé (porté par le projectile). */

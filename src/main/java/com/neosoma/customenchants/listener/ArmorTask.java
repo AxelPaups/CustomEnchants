@@ -24,7 +24,8 @@ public class ArmorTask extends BukkitRunnable {
     }
 
     private int niv(ItemStack piece, String id) {
-        return EnchantState.actif(id) ? EnchantIndex.niveau(piece, id) : 0;
+        int niveau = EnchantIndex.niveau(piece, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
     }
 
     @Override

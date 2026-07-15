@@ -45,6 +45,11 @@ public class BowListener implements Listener {
         return new NamespacedKey(plugin, "fleche_" + id);
     }
 
+    private int niv(ItemStack arc, String id) {
+        int niveau = EnchantIndex.niveau(arc, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onTir(EntityShootBowEvent event) {
         if (!(event.getEntity() instanceof Player tireur)) return;
@@ -54,15 +59,14 @@ public class BowListener implements Listener {
 
         // Marque la flèche avec les enchantements du tir
         for (String id : ENCHANTS_FLECHE) {
-            int lvl = EnchantState.actif(id) ? EnchantIndex.niveau(arc, id) : 0;
+            int lvl = niv(arc, id);
             if (lvl > 0) {
                 fleche.getPersistentDataContainer().set(cle(id), PersistentDataType.INTEGER, lvl);
             }
         }
 
         // Flèches multiples : tirs supplémentaires en éventail
-        int multi = EnchantState.actif("fleches_multiples")
-                ? EnchantIndex.niveau(arc, "fleches_multiples") : 0;
+        int multi = niv(arc, "fleches_multiples");
         if (multi > 0) {
             Vector vitesse = fleche.getVelocity();
             for (int i = 1; i <= multi; i++) {
@@ -85,7 +89,7 @@ public class BowListener implements Listener {
         }
 
         // Traçante : correction de trajectoire vers la cible la plus proche
-        if (EnchantState.actif("tracante") && EnchantIndex.niveau(arc, "tracante") > 0) {
+        if (niv(arc, "tracante") > 0) {
             suivreCible(fleche, tireur);
         }
     }

@@ -8,7 +8,7 @@
 - **5 raretés** : Commun (blanc), Rare (bleu), Épique (violet), Légendaire (or), Mythique (rouge). Le Mythique est introuvable en table : uniquement via les villageois (une seule vente), les coffres générés ou l'admin.
 - **Table d'enchantement et enclume natives** : les enchants apparaissent comme les enchants vanilla, avec poids selon la rareté, conflits et fusion de livres gérés par le jeu.
 - **Anti-cumul** : groupes exclusifs (un seul « gros dégât » par épée, un seul comportement de flèche, etc.), maximum 3 enchants custom par item, et coût XP progressif à l'enclume.
-- **Panel admin** (`/ce panel`) : activer/désactiver chaque enchant indépendamment (clic gauche), se donner le livre ou l'item déjà enchanté au niveau choisi (clic droit), filtres par catégorie et rareté, tout activer/désactiver, reload.
+- **Panel admin** (`/ce panel`) : activer/désactiver chaque enchant indépendamment (clic gauche), bloquer des niveaux précis d'un enchant (shift + clic gauche), se donner le livre ou l'item déjà enchanté au niveau choisi (clic droit), filtres par catégorie et rareté, tout activer/désactiver, reload.
 - **Menu public** (`/ce menu`) : catalogue en lecture seule accessible à tous les joueurs, enchants désactivés grisés.
 - **Villageois bibliothécaires** : ~20 % des trades de livre enchanté sont remplacés par un livre custom, coût croissant avec la rareté (émeraudes → diamants → netherite + blocs d'émeraude).
 - **Loot** : ~12 % de chance qu'un coffre généré contienne un livre custom (configurable).
@@ -20,11 +20,11 @@
 3. Sur la page du dépôt : **Add file → Upload files**, puis glisse-dépose **tout le contenu de ce dossier** (y compris les dossiers `src` et `.github`). Clique **Commit changes**.
    - Important : le dossier `.github` doit être uploadé, c'est lui qui contient la recette de compilation. S'il n'apparaît pas dans le glisser-déposer (dossier caché), utilise l'upload par dossier complet depuis l'explorateur.
 4. Va dans l'onglet **Actions** du dépôt. Si un bandeau te demande d'activer les workflows, clique **Enable**. Le build `Build CustomEnchants` se lance automatiquement (sinon : bouton **Run workflow**).
-5. Quand le build est vert (~2 min), clique dessus puis télécharge l'**artifact** `CustomEnchants` en bas de page. C'est un zip contenant `CustomEnchants-1.2.0.jar`.
+5. Quand le build est vert (~2 min), clique dessus puis télécharge l'**artifact** `CustomEnchants` en bas de page. C'est un zip contenant `CustomEnchants-1.3.0.jar`.
 
 ## Installation sur le serveur
 
-1. Mets `CustomEnchants-1.2.0.jar` dans le dossier `plugins/` du serveur **Paper 1.21.8**.
+1. Mets `CustomEnchants-1.3.0.jar` dans le dossier `plugins/` du serveur **Paper 1.21.8**.
 2. **Redémarre** le serveur (pas de /reload : le registre s'enregistre au démarrage).
 3. C'est tout. Les enchants apparaissent en table et en enclume.
 

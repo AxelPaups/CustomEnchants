@@ -39,7 +39,8 @@ public class MiscListener implements Listener {
     }
 
     private int niv(ItemStack item, String id) {
-        return EnchantState.actif(id) ? EnchantIndex.niveau(item, id) : 0;
+        int niveau = EnchantIndex.niveau(item, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
     }
 
     // ---- Dernier souffle : sursaut de survie ----

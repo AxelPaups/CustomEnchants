@@ -98,11 +98,19 @@ public final class AdminPanel {
             if (ce.groupeExclusif() != null) {
                 lore.add(Util.ligneGrise("Non cumulable avec son groupe."));
             }
+            var bloques = EnchantState.niveauxBloques(ce.id());
+            if (!bloques.isEmpty()) {
+                String niveaux = bloques.stream().sorted()
+                        .map(Util::romain).reduce((a, b) -> a + ", " + b).orElse("");
+                lore.add(ligne("Niveaux bloqués : ", niveaux, NamedTextColor.RED));
+            }
             if (admin) {
                 lore.add(Component.empty());
                 lore.add(Component.text("Clic gauche : activer / désactiver", NamedTextColor.YELLOW)
                         .decoration(TextDecoration.ITALIC, false));
                 lore.add(Component.text("Clic droit : se donner (livre ou item)", NamedTextColor.YELLOW)
+                        .decoration(TextDecoration.ITALIC, false));
+                lore.add(Component.text("Shift + clic gauche : bloquer des niveaux", NamedTextColor.YELLOW)
                         .decoration(TextDecoration.ITALIC, false));
             }
             meta.lore(lore);
@@ -134,6 +142,36 @@ public final class AdminPanel {
                 "Recevoir l'item déjà enchanté", NamedTextColor.LIGHT_PURPLE);
         inv.setItem(22, exemple);
         inv.setItem(26, bouton(Material.ARROW, "Retour au panel", NamedTextColor.YELLOW));
+
+        joueur.openInventory(inv);
+    }
+
+    // =====================================================
+    //  Sous-menu "niveaux" : blocage individuel
+    // =====================================================
+    public static void ouvrirNiveaux(Player joueur, NiveauHolder holder) {
+        CEnchant ce = Enchants.parId(holder.enchantId);
+        if (ce == null) return;
+
+        int taille = Math.max(9, (int) (Math.ceil((ce.niveauMax() + 1) / 9.0) * 9));
+        Inventory inv = Bukkit.createInventory(holder, taille, titre("Niveaux : " + ce.nom()));
+        holder.setInventory(inv);
+
+        for (int i = 1; i <= ce.niveauMax(); i++) {
+            int niveau = i;
+            boolean bloque = EnchantState.niveauBloque(ce.id(), niveau);
+            ItemStack item = new ItemStack(bloque ? Material.GRAY_DYE : Material.LIME_DYE);
+            Util.editerMeta(item, meta -> {
+                meta.displayName(Component.text(ce.nom() + " " + Util.romain(niveau),
+                                ce.rarete().couleur())
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text(bloque ? "  [BLOQUÉ]" : "  [ACTIF]",
+                                bloque ? NamedTextColor.RED : NamedTextColor.GREEN)));
+                meta.lore(List.of(Util.ligneGrise("Clic : activer / bloquer ce niveau")));
+            });
+            inv.setItem(i - 1, item);
+        }
+        inv.setItem(taille - 1, bouton(Material.ARROW, "Retour au panel", NamedTextColor.YELLOW));
 
         joueur.openInventory(inv);
     }

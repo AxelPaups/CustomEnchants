@@ -49,7 +49,8 @@ public class LootListener implements Listener {
             }
         }
 
-        int niveau = 1 + rand.nextInt(choisi.niveauMax());
+        int niveau = EnchantState.niveauAleatoireAutorise(choisi);
+        if (niveau <= 0) return;
         event.getLoot().add(Util.livre(choisi, niveau));
     }
 }

@@ -26,7 +26,8 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onDrag(InventoryDragEvent event) {
         if (event.getInventory().getHolder() instanceof PanelHolder
-                || event.getInventory().getHolder() instanceof GiveHolder) {
+                || event.getInventory().getHolder() instanceof GiveHolder
+                || event.getInventory().getHolder() instanceof NiveauHolder) {
             event.setCancelled(true);
         }
     }
@@ -34,7 +35,8 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onClic(InventoryClickEvent event) {
         var holder = event.getInventory().getHolder();
-        if (!(holder instanceof PanelHolder) && !(holder instanceof GiveHolder)) return;
+        if (!(holder instanceof PanelHolder) && !(holder instanceof GiveHolder)
+                && !(holder instanceof NiveauHolder)) return;
 
         event.setCancelled(true);
         if (!(event.getWhoClicked() instanceof Player joueur)) return;
@@ -42,16 +44,18 @@ public class GuiListener implements Listener {
         if (slot < 0 || slot >= event.getInventory().getSize()) return;
 
         if (holder instanceof PanelHolder panel) {
-            clicPanel(joueur, panel, slot, event.isRightClick());
+            clicPanel(joueur, panel, slot, event.isRightClick(), event.isShiftClick());
         } else if (holder instanceof GiveHolder give) {
             clicGive(joueur, give, slot);
+        } else if (holder instanceof NiveauHolder niveaux) {
+            clicNiveaux(joueur, niveaux, slot);
         }
     }
 
     // =====================================================
     //  Panel principal
     // =====================================================
-    private void clicPanel(Player joueur, PanelHolder panel, int slot, boolean clicDroit) {
+    private void clicPanel(Player joueur, PanelHolder panel, int slot, boolean clicDroit, boolean shiftClic) {
 
         // Zone des enchantements
         if (slot < AdminPanel.PAR_PAGE) {
@@ -63,6 +67,8 @@ public class GuiListener implements Listener {
 
             if (clicDroit) {
                 AdminPanel.ouvrirGive(joueur, new GiveHolder(id, panel));
+            } else if (shiftClic) {
+                AdminPanel.ouvrirNiveaux(joueur, new NiveauHolder(id, panel));
             } else {
                 boolean actif = EnchantState.basculer(id);
                 plugin.msg(joueur, actif
@@ -164,5 +170,27 @@ public class GuiListener implements Listener {
         var restes = joueur.getInventory().addItem(item);
         restes.values().forEach(reste ->
                 joueur.getWorld().dropItemNaturally(joueur.getLocation(), reste));
+    }
+
+    // =====================================================
+    //  Sous-menu "niveaux" : blocage individuel
+    // =====================================================
+    private void clicNiveaux(Player joueur, NiveauHolder niveaux, int slot) {
+        CEnchant ce = Enchants.parId(niveaux.enchantId);
+        if (ce == null) return;
+
+        if (slot < ce.niveauMax()) {
+            int niveau = slot + 1;
+            boolean actif = EnchantState.basculerNiveau(ce.id(), niveau);
+            plugin.msg(joueur, actif
+                    ? "<green>" + ce.nom() + " " + Util.romain(niveau) + " débloqué.</green>"
+                    : "<red>" + ce.nom() + " " + Util.romain(niveau) + " bloqué.</red>");
+            AdminPanel.ouvrirNiveaux(joueur, niveaux);
+            return;
+        }
+
+        if (slot == niveaux.getInventory().getSize() - 1) {
+            AdminPanel.ouvrir(joueur, niveaux.retour);
+        }
     }
 }

@@ -18,7 +18,7 @@ public class TableFilterListener implements Listener {
     public void onEnchant(EnchantItemEvent event) {
         event.getEnchantsToAdd().entrySet().removeIf(entree -> {
             CEnchant ce = EnchantIndex.ceOf(entree.getKey());
-            return ce != null && !EnchantState.actif(ce.id());
+            return ce != null && !EnchantState.niveauActif(ce.id(), entree.getValue());
         });
     }
 }

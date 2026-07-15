@@ -35,7 +35,8 @@ public class CombatListener implements Listener {
     }
 
     private int niv(ItemStack arme, String id) {
-        return EnchantState.actif(id) ? EnchantIndex.niveau(arme, id) : 0;
+        int niveau = EnchantIndex.niveau(arme, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)

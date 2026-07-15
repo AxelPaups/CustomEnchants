@@ -50,9 +50,13 @@ public class AnvilListener implements Listener {
         ItemStack base = event.getInventory().getFirstItem();
         Map<CEnchant, Integer> surBase = EnchantIndex.customsSur(base);
 
-        // Un enchantement désactivé ne peut pas être AJOUTÉ (mais reste sur les items existants)
-        for (CEnchant ce : customs.keySet()) {
-            if (!EnchantState.actif(ce.id()) && !surBase.containsKey(ce)) {
+        // Un enchant désactivé ou un niveau bloqué ne peut pas être AJOUTÉ
+        // (mais reste sur les items qui le portaient déjà à ce niveau)
+        for (Map.Entry<CEnchant, Integer> entree : customs.entrySet()) {
+            CEnchant ce = entree.getKey();
+            int niveau = entree.getValue();
+            boolean dejaPresentAuMemeNiveau = surBase.getOrDefault(ce, 0) == niveau;
+            if (!EnchantState.niveauActif(ce.id(), niveau) && !dejaPresentAuMemeNiveau) {
                 event.setResult(null);
                 return;
             }

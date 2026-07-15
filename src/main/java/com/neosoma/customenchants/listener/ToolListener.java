@@ -45,7 +45,8 @@ public class ToolListener implements Listener {
     }
 
     private int niv(ItemStack outil, String id) {
-        return EnchantState.actif(id) ? EnchantIndex.niveau(outil, id) : 0;
+        int niveau = EnchantIndex.niveau(outil, id);
+        return EnchantState.niveauActif(id, niveau) ? niveau : 0;
     }
 
     // =========================================================
